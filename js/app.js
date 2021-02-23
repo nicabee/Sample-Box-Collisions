@@ -14,7 +14,7 @@ window.onload = function() {
   drawCanv();
 }
 
-//obstacle object
+/* obstacle object */
 var object = {
     height: 50,
     width: 50,
@@ -23,16 +23,16 @@ var object = {
   }
 
 function drawCanv() {
-    //canvas
+    /* canvas */
     ctx1.beginPath();
     ctx1.fillStyle = "#ffffff";
     ctx1.fillRect(0, 0, canvas.width, canvas.height);
-    //player
+    /* player */
     ctx1.beginPath();
     ctx1.fillStyle = "black";
     ctx1.fillRect(xcoord, ycoord, player.width, player.height);
   
-  //obstacle object
+  /* obstacle object */
   var ndx = obstacle.push({
       x: object.x,
       y: object.y,
@@ -44,7 +44,7 @@ function drawCanv() {
     ctx.fillRect(obstacle[ndx].x, obstacle[ndx].y, obstacle[ndx].width, obstacle[ndx].height);
 }
 
-//player object
+/* player object */
 var player = {
     height: 10,
     width: 10,
@@ -88,8 +88,10 @@ function hitObsta(player, array) {
 
 
 function onkeydown(e) {
-  if (e.keyCode == 68 && xcoord + 30 < canvas.width) {
-    xcoord++;
+  /* Going right or pressing D */
+  if (e.keyCode == 68 && xcoord + 10 < canvas.width) { /* + 10 because 10x10 is the size of the player */
+    xcoord++;                                          /* since it is going right, x-axis increases and to check
+                                                          collision, x-axis value + size of player must be less than width  */
     var updatedCoords = (Object.assign({
         x: xcoord,
         y: ycoord,
@@ -97,8 +99,10 @@ function onkeydown(e) {
     if (hitObsta(updatedCoords, obstacle)) {
         xcoord--;
     }
-  } else if (e.keyCode == 65 && xcoord > 0) {
-    xcoord--;
+  } 
+  /* Going left ot pressing A */
+  else if (e.keyCode == 65 && xcoord > 0) {  /* x-axis to the left means that the value is x decreasing. */
+    xcoord--;                                 /* width runs from the left (0) to right (canvas.width)*/
     var updatedCoords = (Object.assign({
         x: xcoord,
         y: ycoord,
@@ -106,8 +110,10 @@ function onkeydown(e) {
     if (hitObsta(updatedCoords, obstacle)) {
         xcoord++;
     }
-  } else if (e.keyCode == 87 && ycoord > 0) {
-    ycoord--;
+  } 
+  /* Going up or pressing W */
+  else if (e.keyCode == 87 && ycoord > 0) { /* height runs the top(0) until the bottom(canvas.height) (increases as it goes down) */
+    ycoord--;                               /* if player wants to go up, y-value should decrease */
     var updatedCoords = (Object.assign({
         x: xcoord,
         y: ycoord,
@@ -115,8 +121,11 @@ function onkeydown(e) {
     if (hitObsta(updatedCoords, obstacle)) {
         ycoord++;
     }
-  } else if (e.keyCode == 83 && ycoord + 30 < canvas.height) {
-    ycoord++;
+  } 
+  /* Going down or pressing S */
+  else if (e.keyCode == 83 && ycoord + 10 < canvas.height) { /* To check if collision happened below, y-value + size
+                                                              of player (10x10) must be less than the canvas height  */
+    ycoord++; 
     var updatedCoords = (Object.assign({
         x: xcoord,
         y: ycoord,
